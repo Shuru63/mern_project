@@ -1,22 +1,47 @@
 const Product = require("../modal/productmodal");
+const Apifeatures = require("../utils/Apifeture");
+const ErrorHandle = require("../utils/ErrorHandler");
+
 // create the product
-const createProduct = async (req, res) => {
-    const createProducts = await Product.create(req.body)
-    res.status(200).json({ success: true, product: createProducts });
-}
+const createProduct = async (req, res, next) => {
+    try {
+        const createProducts = await Product.create(req.body);
+        res.status(200).json({ success: true, product: createProducts });
+    } catch (error) {
+        return next(new ErrorHandle("please enter proper details", 400));
+    }
+};
 // get all product in database
-const getAllRouter = async (req, res) => {
-    const products = await Product.find();
-    res.status(200).json({ success: true, products });
+const getAllRouter = async (req, res, next) => {
+    // try {
+    //     const resultPerPage=5;
+    //     const apifeature = new Apifeatures(Product.find(), req.query)
+    //     .search()
+    //     .filter()
+    //     .pagination(resultPerPage);
+    //     const products = await apifeature.query;
+    //     res.status(200).json({ success: true, products });
+    // } catch (error) {
+    //     return next(new ErrorHandle("Unable to retrieve products", 500));
+    // }
+    const resultPerPage=10;
+    const productcount=await Product.countDocuments();
+    const apifeature = new Apifeatures(Product.find(), req.query)
+    .search()
+    .filter()
+    .pagination(resultPerPage);
+    const products = await apifeature.query;
+    res.status(200).json({
+         success: true,
+          products,
+        productcount });
 };
 // update the product
-const updateproduct = async (req, res) => {
-    let productupdate = Product.findById(req.params.id);
+const updateproduct = async (req, res,next) => {
+    try{
+        let productupdate = Product.findById(req.params.id);
     if (!productupdate) {
-        return res.status(500).json({
-            success: flase
-            , message: "product is not find"
-        });
+        return next(new ErrorHandle("product is not found",500))
     }
     productupdate = await Product.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
@@ -24,35 +49,43 @@ const updateproduct = async (req, res) => {
         useFindAndModify: false
     });
     res.status(200).json({ success: true, productupdate })
+    }
+    catch(error){
+        return next(new ErrorHandle("please enter proper details", 400));
+    }
 }
 // delete product
-const deleteProduct = async (req, res) => {
-    const productDelete = await Product.findById(req.params.id);
+const deleteProduct = async (req, res,next) => {
+    try{
+          const productDelete = await Product.findById(req.params.id);
     if (!productDelete) {
-        return res.status(404).json({
-            success: false,
-            message: "Product not found"
-        });
+       return next(new ErrorHandle("product is not found",500))
     }
     await Product.deleteOne({ _id: req.params.id });
     res.status(200).json({
         success: true,
         message: "Product is deleted successfully"
     });
+    }catch(error){
+        return next(new ErrorHandle("please enter proper details", 400));
+    }
+  
 }
 const getProductDetails= async (req,res) =>{
- const singleproduct=await Product.findById(req.params.id);
+    try{
+        const singleproduct=await Product.findById(req.params.id);
  if(!singleproduct){
-    return res.status(404).json({
-        success:false,
-        message:"product is not found "
-    })
+    return next(new ErrorHandle("product is not found",500))
 
  }  
    res.status(200).json({
         success:true,
         singleproduct
-    })
+    }) 
+    }catch(error){
+        return next(new ErrorHandle("please enter proper details", 400));
+    }
+
 }
 module.exports = { getAllRouter,
      createProduct, 
