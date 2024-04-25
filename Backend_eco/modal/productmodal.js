@@ -36,6 +36,11 @@ const ProductSchema = new mongoose.Schema({
         default: 0
     },
     Reviews: [{
+        user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User", 
+        required: true
+    },
         name: {
             type: String,
             required: true

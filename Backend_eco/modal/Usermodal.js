@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const crypto = require('crypto');
 
 const dotenv = require('dotenv');
 const path = require('path');
@@ -57,5 +58,19 @@ UserSchema.methods.getJwTToken = function () {
         expiresIn: process.env.JWT_EXPIRE
     })
 }
+// genertaing token for forgate password
+UserSchema.methods.getResetPasswordToken = function () {
+    // Generate reset token
+    const resetToken = crypto.randomBytes(20).toString("hex");
+    // Hash the reset token
+    const hashedToken = crypto.createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+    this.resetPasswordToken = hashedToken;
+    this.resetPasswordExpire = Date.now() + 15 * 60 * 1000; // 15 minutes expiration
+
+    return resetToken;
+};
 
 module.exports = mongoose.model("Userdata", UserSchema)
