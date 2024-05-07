@@ -16,8 +16,9 @@ const createProduct = async (req, res, next) => {
 };
 // get all product in database
 const getAllRouter = async (req, res, next) => {
+       
     try {
-        const resultPerPage = 10;
+        const resultPerPage = 8;
         const productcount = await Product.countDocuments();
         const apifeature = new Apifeatures(Product.find(), req.query)
             .search()
@@ -69,7 +70,7 @@ const deleteProduct = async (req, res, next) => {
     }
 
 }
-const getProductDetails = async (req, res) => {
+const getProductDetails = async (req, res,next) => {
     try {
         const singleproduct = await Product.findById(req.params.id);
         if (!singleproduct) {
