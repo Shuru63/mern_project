@@ -6,7 +6,7 @@ const sendEmail = require("../utils/sendEmail.js")
 const crypto = require("crypto")
 const createUser = async (req, res, next) => {
     try {
-        const { name, email, password } = req.body
+        const { name, email, password ,phone} = req.body
         const useremail = UserData.findOne({ email })
         if (!useremail) {
             return next(new ErrorHandle("user already exist ", 404))
@@ -15,6 +15,7 @@ const createUser = async (req, res, next) => {
             name,
             email,
             password,
+            phone,
             avatar: {
                 user_id: "user1",
                 url: "www.hm.in"
