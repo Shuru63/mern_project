@@ -31,7 +31,7 @@ width:25%
     border: 1px solid rgb(224, 220, 220);
 }
 .searc-logo{
-    padding: 0.8vmin;
+    padding: 1.3vmin;
     width: 10vmin;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
@@ -51,7 +51,7 @@ width:25%
 }
 .profile span{
     color: black;
-    font-size: 2.2rem;
+    font-size: 1.7rem;
 }
 .add-cart span{
     color: black;
@@ -99,9 +99,8 @@ border: none;
         font-size: 1.2rem;
     }
     .input input{
-        padding: 1.2vmin;
+        padding: 0.5vmin;
         width: 15vmax;
-
     }
     .searc-logo{
         padding: 0.8vmin;
@@ -118,6 +117,14 @@ border: none;
     .others{
         width: 100%;
     }
+    .login-btn {
+        border-radius: 2rem;
+        background-color: rgb(0, 149, 255);
+        padding: 0.5rem;
+        color: white;
+        font-size: 1rem;
+        border: none;
+}
 }
 @media (max-width: 1250px){
     .power{

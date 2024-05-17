@@ -11,7 +11,8 @@ const setToken = (user, statusCode, res) => {
             .json({
                 success: true,
                 user,
-                token
+                token,
+                message:"log in successfully"
             });
 
 };

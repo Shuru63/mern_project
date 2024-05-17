@@ -6,7 +6,7 @@ const sendEmail = require("../utils/sendEmail.js")
 const crypto = require("crypto")
 const createUser = async (req, res, next) => {
     try {
-        const { name, email, password ,phone} = req.body
+        const { name, email, password, phone } = req.body
         const useremail = UserData.findOne({ email })
         if (!useremail) {
             return next(new ErrorHandle("user already exist ", 404))
@@ -268,7 +268,7 @@ const deleteUser = async (req, res, next) => {
         await deletedata.deleteOne();;
         res.status(200).json({
             success: true,
-            message:"the account is successfully deleted",
+            message: "the account is successfully deleted",
         })
     } catch (error) {
         return next(new ErrorHandle("delete user is not access", 400));
