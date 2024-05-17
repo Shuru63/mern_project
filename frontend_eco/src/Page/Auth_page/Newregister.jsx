@@ -3,14 +3,13 @@ import { Link,useNavigate } from 'react-router-dom'
 import './login.css'
 import { CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle, CButton } from '@coreui/react';
 import '@coreui/coreui/dist/css/coreui.min.css';
-import SummaryApi from '../../common/Index';
-import axios from 'axios';
+import { useDispatch, useSelector } from "react-redux";
+import {  loginUser } from "../../Action/Useraction";
+
 import { useState } from 'react'
 const Newregister = () => {
     const [visible, setVisible] = useState(false);
     const [password, setPassword] = useState(true)
-    const [message, setMessage] = useState('');
-    const [messageColor, setMessageColor] = useState('green');
     const [fname, setFname] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -18,113 +17,15 @@ const Newregister = () => {
   const [cpassword, setCpassword] = useState('');
   const [userType,setUserType]=useState('')
   const navigate = useNavigate();
-  const handleError = (e) => {
-    setVisible(true);
-    setMessage(e);
-    setMessageColor('red');
-  };
+  const dispatch = useDispatch();
+  const loginState = useSelector((state) => state.login);
 
-  // const handleSubmit=async (e)=>{
-  //   e.preventDefault();
-  //   const validate = () => {
-  //       if (!fname || !email || !phone || !inputPassword || !cpassword) {
-  //         handleError('All fields are required');
-  //         return false;
-  //       }
-  //       if (phone.length !== 10) {
-  //         handleError('Phone number must be 10 digits.');
-  //         return false;
-  //       }
-  //       if (inputPassword.length < 6) {
-  //         handleError('Password must be at least 6 characters long.');
-  //         return false;
-  //       }
-  //       if (inputPassword !== cpassword) {
-  //         handleError('Passwords do not match.');
-  //         return false;
-  //       }
-  //       return true;
-  //     };
-  //     if(validate()){
-  //       await axios.post("http://localhost:4000/api/v1/register/",{
-  //         name:fname,
-  //         email:email,
-  //         phone:phone,
-  //         password:inputPassword,
-  //         role: userType
-  //       }).then((response) => {
-  //         if (response.status === 201) {
-  //             setMessageColor('green');
-  //             setMessage(response.data.msg);
-  //             setVisible(true);
-  //             setTimeout(() => {
-  //               navigate('/login')
-  //             }, 2000); 
-  //         }else {
-  //           setMessageColor('red');
-  //           setMessage(response.data.message);
-  //           setVisible(true);
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         setMessageColor('red');
-  //         setMessage('something went wrong please try again 455');
-  //         setVisible(true);
-  //       });
-  //     }
-      
-  // }
-  const handleSubmit = async (e) => {
+  const handleSubmit=async (e)=>{
     e.preventDefault();
-    const validate = () => {
-        if (!fname || !email || !phone || !inputPassword || !cpassword) {
-            handleError('All fields are required');
-            return false;
-        }
-        if (phone.length !== 10) {
-            handleError('Phone number must be 10 digits.');
-            return false;
-        }
-        if (inputPassword.length < 6) {
-            handleError('Password must be at least 6 characters long.');
-            return false;
-        }
-        if (inputPassword !== cpassword) {
-            handleError('Passwords do not match.');
-            return false;
-        }
-        return true;
-    };
-    
-    if (validate()) {
-        try {
-            const response = await axios.post("http://localhost:4000/api/v1/register/", {
-                name: fname,
-                email: email,
-                phone: phone,
-                password: inputPassword,
-                role: userType
-            });
-            
-            if (response.status === 201) {
-                setMessageColor('green');
-                setMessage(response.data.msg);
-                setVisible(true);
-                setTimeout(() => {
-                    navigate('/login');
-                }, 2000); 
-            } else {
-                setMessageColor('red');
-                setMessage(response.data.message);
-                setVisible(true);
-            }
-        } catch (error) {
-            setMessageColor('red');
-            setMessage('Something went wrong. Please try again.');
-            setVisible(true);
-        }
-    }
-};
+    dispatch(loginUser(fname,phone,email, inputPassword,cpassword,userType,navigate));
+    setVisible(true);
+  }
+
 
   return (
     <div>
@@ -137,7 +38,7 @@ const Newregister = () => {
           <CModalTitle id="LiveDemoExampleLabel">Alert</CModalTitle>
         </CModalHeader>
         <CModalBody>
-          <p style={{ color: messageColor }}>{message}</p>
+          <p style={{ color: loginState.messageColor }}>{loginState.message}</p>
           
         </CModalBody>
         <CModalFooter>
