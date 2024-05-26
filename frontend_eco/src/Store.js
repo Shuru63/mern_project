@@ -3,7 +3,7 @@ import { combineReducers } from "redux";
 import { userReducer } from "./Reducer/Userreducer";
 
 const reducer = combineReducers({
-  login: userReducer,
+  user: userReducer,
 });
 
 let initialState = {

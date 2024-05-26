@@ -9,14 +9,12 @@ import { CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle, CButton } 
 import '@coreui/coreui/dist/css/coreui.min.css';
 const LoginPage = () => {
   const dispatch = useDispatch();
-  const loginState = useSelector((state) => state.login);
+  const loginState = useSelector((state) => state.user);
   const [password, setPassword] = useState(true)
   const [email, setEmail] = useState('');
   const [inputPassword, setInputPassword] = useState('');
   const [visible, setVisible] = useState(false);
 
-  
-// console.log(loginState)
   const submitLogin = (e) => {
     e.preventDefault();
     dispatch(loginUser (email, inputPassword,navigate));

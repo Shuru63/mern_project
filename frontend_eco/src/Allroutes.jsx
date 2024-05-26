@@ -5,6 +5,7 @@ import LoginPage from './Page/Auth_page/LoginPage'
 import Register from './Page/Auth_page/Newregister'
 import Home from './Page/Auth_page/Homepage/Home';
 import Product from './Page/Auth_page/Product/Product';
+import Userpage from './components/Userpage/Userpage';
 const Allroutes = () => {
   return (
     <div>
@@ -16,7 +17,7 @@ const Allroutes = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<Register />} />
           <Route path="/product" element={<Product />} />
-
+          <Route path="/userprofile" element={<Userpage />} />
 
 
         </Routes>

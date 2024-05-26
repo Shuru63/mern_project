@@ -8,6 +8,9 @@ import {
     REGISTER_USER_FAIL,
     LOGOUT_SUCCESS,
     LOGOUT_FAIL,
+    LOAD_USER_REQUEST,
+  LOAD_USER_SUCCESS,
+  LOAD_USER_FAIL,
 } from '../Constant/Usercontant';
 
 export const loginUser = (email, password, navigate) => async (dispatch) => {
@@ -26,7 +29,6 @@ export const loginUser = (email, password, navigate) => async (dispatch) => {
             email,
             password,
         });
-        console.log(response)
         if (response.status === 200) {
             const userData = {
                 token: response.data.token,
@@ -128,7 +130,6 @@ export const logoutUser = (navigate) => async (dispatch) => {
             navigate('/', { replace: true });
             dispatch({ type: LOGOUT_SUCCESS });
         } else {
-            console.error('Something went wrong!', response);
             localStorage.removeItem('userData');
             dispatch({ type: LOGOUT_FAIL, payload: 'Logout failed, please try again.' });
         }
@@ -137,3 +138,13 @@ export const logoutUser = (navigate) => async (dispatch) => {
         dispatch({ type: LOGOUT_FAIL, payload: 'Logout failed, please try again.' });
     }
 };
+export const userDetails=()=>async(dispatch)=>{
+try{
+dispatch({type:LOAD_USER_REQUEST});
+const {data}=await axios.get('/api/v1/profile/');
+dispatch({ type: LOAD_USER_SUCCESS, payload: data.user });
+}catch(error){
+    dispatch({ type: LOAD_USER_FAIL, payload: error.response.data.message });
+
+}
+}
