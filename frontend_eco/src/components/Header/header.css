@@ -11,7 +11,7 @@
     width: 92%;
 }
 .logo{
-    width: 30%;
+    width:25%
 }
 .logo-img img{
 width:25%
@@ -20,33 +20,23 @@ width:25%
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    width: 40%;
     cursor: pointer;
+    width: 60%;
 }
-.input input{
+.input-cover{
+    width: 100%;
+}
+.input {
     padding: 1.2vmin;
-    width: 21vmax;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
+    width: 100%;
+    border-radius: 15px;
     border: 1px solid rgb(224, 220, 220);
-}
-.searc-logo{
-    padding: 1.3vmin;
-    width: 10vmin;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
-    background-color: rgb(0, 149, 255);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end; 
-    color: white;
 }
 .others{
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    width: 18%;
+    width: 15%;
     cursor: pointer;
 }
 .profile span{
@@ -70,9 +60,9 @@ border: none;
 }
 .power{
     position: absolute;
-    top: 3%;
+    top: 2%;
     right:12% ;
-    padding: 0.2rem 0.5rem;
+    padding:0rem 0.2rem;
     background-color: rgb(0, 149, 255);
     border-radius: 1rem;
     color: white;
@@ -98,15 +88,14 @@ border: none;
         color: black;
         font-size: 1.2rem;
     }
-    .input input{
+    .input-cover{
+        width: 100%;
+    }
+    .input {
         padding: 0.5vmin;
-        width: 15vmax;
+        width: 100%;
     }
-    .searc-logo{
-        padding: 0.8vmin;
-        width: 5vmin;
-       
-    }
+   
     .search{
         display: flex;
         align-items: center;
@@ -125,13 +114,22 @@ border: none;
         font-size: 1rem;
         border: none;
 }
+.power{
+    position: absolute;
+    top: 1%;
+    right:11% ;
+    padding: 0rem 0.2rem;
+    background-color: rgb(0, 149, 255);
+    border-radius: 1rem;
+    color: white;
+}
 }
 @media (max-width: 1250px){
     .power{
         position: absolute;
         top: 1%;
         right:11% ;
-        padding: 0.2rem 0.5rem;
+        padding: 0rem 0.2rem;
         background-color: rgb(0, 149, 255);
         border-radius: 1rem;
         color: white;

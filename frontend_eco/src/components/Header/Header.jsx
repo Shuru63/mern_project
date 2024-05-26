@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isAuthenticated } = useSelector((state) => state.login);
+  const { isAuthenticated } = useSelector((state) => state.user);
   const handleLogout = () => {
     dispatch(logoutUser(navigate));
 };
@@ -21,22 +21,20 @@ const Header = () => {
             </div>
           </div>
           <div className='search'>
-            <div className='input'>
-              <input type='text' placeholder='search product here...'>
+            <div className='input-cover'>
+              <input type='text' className='input' placeholder='search product here...'>
 
               </input>
             </div>
-            <div className='searc-logo'>
-              <span class="material-symbols-outlined">
-                search
-              </span>
-            </div>
           </div>
           <div className='others'>
+          
             <div className='profile'>
-              <span class="material-symbols-outlined">
+             {isAuthenticated ? ( <Link to="userprofile" style={{ color: "white" }}> <span class="material-symbols-outlined">
                 account_circle
-              </span>
+              </span></Link>):(
+                <span></span>
+              )}
             </div>
             <div className='add-cart'>
               <span class="material-symbols-outlined">
