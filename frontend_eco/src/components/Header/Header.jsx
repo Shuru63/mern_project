@@ -17,7 +17,7 @@ const Header = () => {
         <div className='cover-nav'>
           <div className='logo'>
             <div className='logo-img'>
-              <img src={pic1} alt="" />
+          <Link to='/'  >  <img src={pic1} alt="" /></Link>
             </div>
           </div>
           <div className='search'>
@@ -30,7 +30,7 @@ const Header = () => {
           <div className='others'>
           
             <div className='profile'>
-             {isAuthenticated ? ( <Link to="userprofile" style={{ color: "white" }}> <span class="material-symbols-outlined">
+             {isAuthenticated ? ( <Link to="/userprofile" style={{ color: "white" }}> <span class="material-symbols-outlined">
                 account_circle
               </span></Link>):(
                 <span></span>

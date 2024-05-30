@@ -9,8 +9,11 @@ import {
     LOGOUT_SUCCESS,
     LOGOUT_FAIL,
     LOAD_USER_REQUEST,
-  LOAD_USER_SUCCESS,
-  LOAD_USER_FAIL,
+    LOAD_USER_SUCCESS,
+    LOAD_USER_FAIL,
+    ALL_USERS_REQUEST,
+    ALL_USERS_SUCCESS,
+    ALL_USERS_FAIL
 } from '../Constant/Usercontant';
 
 export const loginUser = (email, password, navigate) => async (dispatch) => {
@@ -138,13 +141,29 @@ export const logoutUser = (navigate) => async (dispatch) => {
         dispatch({ type: LOGOUT_FAIL, payload: 'Logout failed, please try again.' });
     }
 };
-export const userDetails=()=>async(dispatch)=>{
-try{
-dispatch({type:LOAD_USER_REQUEST});
-const {data}=await axios.get('/api/v1/profile/');
-dispatch({ type: LOAD_USER_SUCCESS, payload: data.user });
-}catch(error){
-    dispatch({ type: LOAD_USER_FAIL, payload: error.response.data.message });
+export const userDetails = () => async (dispatch) => {
+    try {
+        dispatch({ type: LOAD_USER_REQUEST });
 
-}
+        const { data } = await axios.get('/api/v1/profile/');
+        dispatch({ type: LOAD_USER_SUCCESS, payload: data });
+    } catch (error) {
+        dispatch({
+            type: LOAD_USER_FAIL,
+            payload: error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message,
+        });
+    }
+};
+export const allUserDetails = () => async (dispatch) => {
+    try {
+        dispatch({ type: ALL_USERS_REQUEST });
+        const allUserData = await axios.get('/api/v1/admin/user/');
+   
+        dispatch({ type: ALL_USERS_SUCCESS, payload: allUserData.data.userdetail })
+    }
+    catch (error) {
+        dispatch({ type: ALL_USERS_FAIL, payload: error.response.data.message });
+    }
 }
