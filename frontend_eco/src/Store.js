@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
-import { userReducer,allUserReducer } from "./Reducer/Userreducer";
+import { userReducer,allUserReducer,profileReducer,ForgetPasswordReducer } from "./Reducer/Userreducer";
 
 const reducer = combineReducers({
   user: userReducer,
   Alluserinfo:allUserReducer,
+  profileUpdate:profileReducer,
+  forgetPassword:ForgetPasswordReducer,
 });
 
 let initialState = {
