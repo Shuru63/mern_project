@@ -1,0 +1,32 @@
+
+.show-Alluser{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px solid black;
+    margin-top: 2rem;
+}
+.show-Alluser p{
+    font-size: 1.2rem;
+    margin-top: 2rem;
+}
+.user-list{
+    width: 90%;
+}
+.user-table{
+    border: 1px solid;
+    width: 100%;
+  }
+  th{
+    padding: 0.5vmax  0.2vmax;
+     border: 1px solid;
+     background-color: rgba(0, 255, 255, 0.319);
+  }
+td{
+    padding: 0.5vmax  0.2vmax;
+     border: 1px solid;
+  }
+  .edit-user span{
+    color: aqua;
+  }

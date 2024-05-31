@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
-import { userReducer } from "./Reducer/Userreducer";
+import { userReducer,allUserReducer } from "./Reducer/Userreducer";
 
 const reducer = combineReducers({
   user: userReducer,
+  Alluserinfo:allUserReducer,
 });
 
 let initialState = {
