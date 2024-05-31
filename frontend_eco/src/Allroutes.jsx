@@ -8,6 +8,7 @@ import Register from './Page/Auth_page/Newregister'
 import Home from './Page/Auth_page/Homepage/Home';
 import Product from './Page/Auth_page/Product/Product';
 import Userpage from './components/Userpage/Userpage';
+import Forgetpasswprd from './Page/Auth_page/Forgetpasswprd';
 const Allroutes = () => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   return (
@@ -21,8 +22,8 @@ const Allroutes = () => {
           <Route path="/signup" element={<Register />} />
           <Route path="/product" element={<Product />} />
           <Route path="/userprofile" element={<Userpage />} />
-
-          {/* <Route path="*" element={<Navigate to="/login" />} /> */}
+          <Route path="/forgetpassword" element={<Forgetpasswprd />} />
+         
         </Routes>
 
      
