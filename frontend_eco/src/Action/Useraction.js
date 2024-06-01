@@ -13,7 +13,17 @@ import {
     LOAD_USER_FAIL,
     ALL_USERS_REQUEST,
     ALL_USERS_SUCCESS,
-    ALL_USERS_FAIL
+    ALL_USERS_FAIL,
+    UPDATE_USER_REQUEST,
+    UPDATE_USER_SUCCESS,
+    UPDATE_USER_RESET,
+    UPDATE_USER_FAIL,
+    FORGOT_PASSWORD_REQUEST,
+    FORGOT_PASSWORD_SUCCESS,
+    FORGOT_PASSWORD_FAIL,
+    RESET_PASSWORD_REQUEST,
+    RESET_PASSWORD_SUCCESS,
+    RESET_PASSWORD_FAIL
 } from '../Constant/Usercontant';
 
 export const loginUser = (email, password, navigate) => async (dispatch) => {
@@ -65,21 +75,21 @@ export const Register = (name, email, phone, password, cpassword, role, navigate
     dispatch({ type: REGISTER_USER_REQUEST });
     if (!name || !email || !phone || !password || !cpassword) {
         dispatch({
-            type: LOGIN_FAIL,
+            type: REGISTER_USER_FAIL,
             payload: 'All fields are required',
         });
         return;
     }
     else if (phone.length !== 10) {
         dispatch({
-            type: LOGIN_FAIL,
+            type: REGISTER_USER_FAIL,
             payload: 'Phone number must be 10 digits.',
         });
         return;
     }
     else if (password.length < 6) {
         dispatch({
-            type: LOGIN_FAIL,
+            type: REGISTER_USER_FAIL,
             payload: 'Password must be at least 6 characters long.',
         });
         return;
@@ -87,7 +97,7 @@ export const Register = (name, email, phone, password, cpassword, role, navigate
     }
     else if (password !== cpassword) {
         dispatch({
-            type: LOGIN_FAIL,
+            type: REGISTER_USER_FAIL,
             payload: 'Passwords do not match.',
         });
         return;
@@ -165,5 +175,61 @@ export const allUserDetails = () => async (dispatch) => {
     }
     catch (error) {
         dispatch({ type: ALL_USERS_FAIL, payload: error.response.data.message });
+    }
+};
+
+export const updateUserRole=(id, fname, email,userType)=> async (dispatch)=>{
+    try{
+        if (!fname || !email || !userType) {
+            dispatch({
+                type: UPDATE_USER_FAIL,
+                payload: 'All fields are required..',
+            });
+            return;
+        }
+        
+       dispatch({type:UPDATE_USER_REQUEST});
+     
+       const roleData= await axios.put(`/api/v1/admin/user${id}`,{
+        fname,
+         email,
+         userType
+        });
+       dispatch({type:UPDATE_USER_SUCCESS,payload:roleData.success})
+ }catch(error){
+        dispatch({type: UPDATE_USER_FAIL,
+        payload: error.response.data.message,})
+    }
+}
+
+export const getOtpEmail=(email,navigate)=>async(dispatch)=>{
+    try{
+     dispatch({type:FORGOT_PASSWORD_REQUEST});
+     const forgetData= await  axios.post('/api/v1//password/forget/',
+        {
+            email
+        }
+     ).then((response) => {
+        if (response.status === 201) {
+            dispatch({type:FORGOT_PASSWORD_SUCCESS,payload:forgetData})
+            setTimeout(() => {
+                navigate('/forgetpassword');
+            }, 2000);
+        } else {
+            dispatch({
+                type: FORGOT_PASSWORD_FAIL,
+                payload: response.data.message,
+            })
+        }
+    })
+        .catch((error) => {
+            dispatch({
+                type:FORGOT_PASSWORD_FAIL,
+                payload: error.response.data.message,
+            })
+        });
+     dispatch({type:FORGOT_PASSWORD_SUCCESS,payload:forgetData.data})
+    }catch(error){
+      dispatch({type:FORGOT_PASSWORD_FAIL,payload: error.response.data.message})
     }
 }

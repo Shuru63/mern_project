@@ -67,7 +67,7 @@ const LoginPage = () => {
                 }
 
               </div>
-              <p className='forget'>Forget password</p>
+              <p className='forget'><Link to="/forgetpassword" style={{ color: "rgb(0, 149, 255)" ,textDecoration:"none"}}>Forget password </Link></p>
             </div>
             <div className='log-btn'>
               <button className='log-botn' type="submit">
@@ -75,7 +75,7 @@ const LoginPage = () => {
               </button>
             </div>
           </form>
-          <p className='dont-acc'>Dont have account ? <span><Link to="/signup" style={{ color: "rgb(0, 149, 255)" }}>Sign up</Link></span></p>
+          <p className='dont-acc'>Dont have account ? <span><Link to="/signup" style={{ color: "rgb(0, 149, 255)" ,textDecoration:"none"}}>Sign up</Link></span></p>
         </div>
       </div>
     </div>
