@@ -5,6 +5,7 @@ import { userDetails } from '../../Action/Useraction';
 import Alluser from '../mini-component/Alluser';
 import Uploadproduct from '../mini-component/Uploadproduct';
 import './userpage.css'
+
 const UserProfile = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
