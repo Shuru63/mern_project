@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { userReducer,allUserReducer,profileReducer,ForgetPasswordReducer } from "./Reducer/Userreducer";
-import { productsReducer,getAllProductReducer } from "./Reducer/Productreducer";
+import { productsReducer,getAllProductReducer ,UpdateDelProductReducer} from "./Reducer/Productreducer";
 const reducer = combineReducers({
   user: userReducer,
   Alluserinfo:allUserReducer,
@@ -9,6 +9,7 @@ const reducer = combineReducers({
   forgetPassword:ForgetPasswordReducer,
   addNewProduct:productsReducer,
   allProductsData:getAllProductReducer,
+  updateDelete:UpdateDelProductReducer,
 });
 
 let initialState = {

@@ -1,6 +1,7 @@
 import React from 'react'
 import './uploadproduct.css'
 import { useState } from 'react'
+import axios from 'axios';
 import { CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle, CButton } from '@coreui/react';
 import '@coreui/coreui/dist/css/coreui.min.css';
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +18,7 @@ const Uploadproduct = () => {
     const [categories, setCategories] = useState('');
     const [Stock, setStock] = useState(0);
     const newData = useSelector((state) => state.addNewProduct)
-    
+
     const dispatch = useDispatch();
     const category = [
         "Airpodes",
@@ -32,23 +33,69 @@ const Uploadproduct = () => {
         "Trimmers",
         "TV",
         "watches",
-            ];
+    ];
+    const categoriesData = [
+        { Category: 'Airpodes', heading: 'Airbuds' },
+        { Category: 'camera', heading: ' Cameras' },
+        { Category: 'Earphones', heading: ' Earphones' },
+        { Category: 'mobiles', heading: ' Mobiles' },
+        { Category: 'mouse', heading: 'Mice' },
+        { Category: 'printer', heading: ' Printers' },
+        { Category: 'processor', heading: ' Processors' },
+        { Category: 'refrigerater', heading: ' Refrigerators' },
+        { Category: 'Speaker', heading: ' Speakers' },
+        { Category: 'Trimmers', heading: ' Trimmers' },
+        { Category: 'TV', heading: ' TVs' },
+        { Category: 'watches', heading: ' Watches' },
+    ];
+    // const createProductSubmitHandler = (e) => {
+    //     e.preventDefault();
+    //     const imageObjects = image.map((image, index) => ({
+    //         publicId: `image_${index}`, // You can generate a unique publicId here
+    //         url: image, // Assuming image is a URL or base64 data
+    //     }));
+    //     dispatch(addNewProduct(name, description, price, imageObjects, categories, Stock));
+    //     setVisible(true);
+    //     setCardVisible(false);
+    //     console.log(newData)
+    // }
 
-    const createProductSubmitHandler = (e) => {
+    const createProductSubmitHandler = async (e) => {
         e.preventDefault();
-        const imageObjects = image.map((image, index) => ({
-            publicId: `image_${index}`, // You can generate a unique publicId here
-            url: image, // Assuming image is a URL or base64 data
-        }));
-        dispatch(addNewProduct(name, description, price, imageObjects, categories, Stock));
-        setVisible(true);
-        setCardVisible(false);
-        console.log(newData)
+
+        try {
+            const imageObjects = [];
+
+            for (const images of image) {
+                const formData = new FormData();
+                formData.append('file', images);
+                formData.append('upload_preset', 'Shuru_Mern_product');
+
+                const response = await axios.post('https://api.cloudinary.com/v1_1/di2txkpph/image/upload', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+
+                // imageUrls.push(response.data.secure_url);
+                imageObjects.push({
+                    publicId: response.data.public_id,
+                    url: response.data.secure_url,
+                });
+            }
+
+            console.log(name, description, price, imageObjects, categories, Stock)
+            dispatch(addNewProduct(name, description, price, imageObjects, categories, Stock));
+            setVisible(true);
+            setCardVisible(false);
+        } catch (error) {
+            console.error('Error uploading images to Cloudinary:', error);
+        }
     }
     const handleShowProducts = () => {
         setCardVisible(true);
     };
-    
+
 
     const createProductImagesChange = (e) => {
         const files = Array.from(e.target.files);
@@ -114,7 +161,7 @@ const Uploadproduct = () => {
                             <label htmlFor='email'>Product Image :</label>
                             <input type='file'
                                 accept="image/*"
-                                placeholder='enter Image ' onChange={createProductImagesChange} />
+                                placeholder='enter Image ' onChange={createProductImagesChange} multiple />
                         </div>
                         <div className='upload-user'>
                             <label htmlFor='email'>Categories :</label>
@@ -167,9 +214,17 @@ const Uploadproduct = () => {
                                 Upload product
                             </button>
                         </div>
-                        
+
                     </div>
-                    <ShowAllProduct/>
+                    {
+                                categoriesData.map((categoryItem, index) => (
+                                    <ShowAllProduct 
+                                        key={index}
+                                        Category={categoryItem.Category}
+                                        heading={categoryItem.heading}
+                                    />
+                                ))
+                            }
                 </div>
             </div>
 
