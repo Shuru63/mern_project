@@ -51,7 +51,7 @@ export const loginUser = (email, password, navigate) => async (dispatch) => {
             if (response.data.token) {
                 document.cookie = `token=${response.data.token}; path=/product`;
                 dispatch({ type: LOGIN_SUCCESS, payload: userData });
-                navigate('/product', { replace: true });
+                navigate('/', { replace: true });
             } else {
                 dispatch({
                     type: LOGIN_FAIL,
