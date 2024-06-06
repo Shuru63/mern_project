@@ -4,7 +4,7 @@ const ErrorHandle = require("../utils/ErrorHandler");
 
 // create the product
 const createProduct = async (req, res, next) => {
-    try {
+     try {
         const createProducts = await Product.create(req.body);
         res.status(200).json({
             success: true,

@@ -12,12 +12,15 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
+    background-color: rgb(205, 243, 243);
+    
 }
 .allproduct-heading p{
     font-size: 1.5vmax;
+    font-weight: 900;
 }
 .upload-button{
-    border-radius: 0.5rem;
+    border-radius: 0.8rem;
     border:2px solid  rgb(0, 149, 255) ;
     background-color: transparent;
     padding: 0.5rem 1.1rem 0.5rem 1.1rem;
@@ -29,4 +32,38 @@
 .upload-button:hover{
     border:none;
   background-color:  rgb(0, 149, 255);
+}
+form {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+}
+.upload-user textarea  {
+    padding: 1.8vmin;
+    border-radius: 15px;
+    width: 100%;
+    border: 1px solid rgb(0, 149, 255);
+}
+.upload-user{
+    width: 70%;
+    margin-top:1rem;
+}
+.upload-user input  {
+    padding: 1.8vmin;
+    border-radius: 15px;
+    width: 100%;
+    border: 1px solid rgb(0, 149, 255);
+}
+.upload-user select  {
+    padding: 1.8vmin;
+    border-radius: 15px;
+    width: 100%;
+    border: 1px solid rgb(0, 149, 255);
+}
+.Product_Preview{
+    width: 100%;
+    height: 10rem;
 }
