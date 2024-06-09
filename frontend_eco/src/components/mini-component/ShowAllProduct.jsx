@@ -1,23 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllAdminProduct,updateProduct,deleteProduct } from '../../Action/Productaction';
+import { getAllAdminProduct, updateProduct, deleteProduct } from '../../Action/Productaction';
 import './Showproduct.css';
 import { CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle, CButton } from '@coreui/react';
 import '@coreui/coreui/dist/css/coreui.min.css';
-
+import Loader from '../Fotter/Loader';
 const ShowAllProduct = ({ Category, heading }) => {
   const [allProductsData, setAllProductsData] = useState([]);
-  const [cardVisible, setCardVisible] = useState(false)
+  const [cardVisible, setCardVisible] = useState(false);
   const [visible, setVisible] = useState(false);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
-  const [image, setImages] = useState([]);
-  const [imagesPreview, setImagesPreview] = useState([]);
-  const [categories, setCategories] = useState('');
   const [Stock, setStock] = useState(0);
+  const [userid, setUserId] = useState();
+  
   const dispatch = useDispatch();
   const getProducts = useSelector(state => state.allProductsData);
+  const deleteUpdate = useSelector(state => state.updateDelete);
+  const{loading}= deleteUpdate
+  const {loadingwhole}=getProducts
+  const handleProductUpdate = async (e) => {
+    e.preventDefault();
+    dispatch(updateProduct(userid, { name, description, price, Stock }));
+  };
+
+  const handleProductDelete = (e) => {
+    e.preventDefault();
+    dispatch(deleteProduct(userid));
+    setVisible(false);
+  };
 
   useEffect(() => {
     dispatch(getAllAdminProduct());
@@ -28,16 +40,25 @@ const ShowAllProduct = ({ Category, heading }) => {
       setAllProductsData(getProducts.ourproducts.data.products);
     }
   }, [getProducts]);
-  const handleDeleteProducts = () => {
-    setVisible(true);
 
-};
-const handleUpdateProducts = () => {
-  setCardVisible(true);
-  
-};
+  const handleDeleteProducts = (userId) => {
+    setUserId(userId);
+    setVisible(true);
+    console.log(userId)
+  };
+
+  const handleUpdateProducts = (userId) => {
+    setUserId(userId);
+    setCardVisible(true);
+    console.log(userId)
+  };
   return (
     <div>
+      {loadingwhole ? (
+                <Loader/>
+            ) : (
+    <div>
+      
       <CModal
         visible={visible}
         onClose={() => setVisible(false)}
@@ -48,8 +69,13 @@ const handleUpdateProducts = () => {
           <CModalTitle id="LiveDemoExampleLabel">Alert</CModalTitle>
         </CModalHeader>
         <CModalBody>
-          <p>thdhmdm ju</p>
-
+          <div className='delete_modal'>
+            <p>Are you sure Delete the Product</p>
+          <div className='product_delete_btn' >
+             <button onClick={handleProductDelete}>delete product</button> 
+          </div>
+          </div>
+          
         </CModalBody>
         <CModalFooter>
           <CButton color="secondary" onClick={() => setVisible(false)}>
@@ -58,61 +84,52 @@ const handleUpdateProducts = () => {
         </CModalFooter>
       </CModal>
       <CModal
-                visible={cardVisible}
-                onClose={() => setCardVisible(false)}
-                aria-labelledby="LiveDemoExampleLabel"
-                alignment='center'
-                size='lg'
-            >
-                <CModalHeader onClose={() => setCardVisible(false)}>
-                    <CModalTitle id="LiveDemoExampleLabel">Alert</CModalTitle>
-                </CModalHeader>
-                <CModalBody>
-                    <form >
-                        <div className='upload-user'>
-                            <label htmlFor='name'>Productname :</label>
-                            <input type='text' placeholder='enter name of product' onChange={(e) => setName(e.target.value)} />
-                        </div>
+        visible={cardVisible}
+        onClose={() => setCardVisible(false)}
+        aria-labelledby="LiveDemoExampleLabel"
+        alignment='center'
+        size='lg'
+      >
+        <CModalHeader onClose={() => setCardVisible(false)}>
+          <CModalTitle id="LiveDemoExampleLabel">Alert</CModalTitle>
+        </CModalHeader>
+        <CModalBody>
+          <form onSubmit={handleProductUpdate}>
+            <div className='upload-user'>
+              <label htmlFor='name'>Productname :</label>
+              <input type='text' placeholder='enter name of product' onChange={(e) => setName(e.target.value)} />
+            </div>
 
-                        <div className='upload-user'>
-                            <label htmlFor='email'>Price :</label>
-                            <input type='number' placeholder='enter Price' onChange={(e) => setPrice(e.target.value)} />
-                        </div>
-                        <div className='upload-user'>
-                            <label htmlFor='email'>Product Image :</label>
-                            <input type='file'
-                                accept="image/*"
-                                placeholder='enter Image '  multiple />
-                        </div>
-                        <div className='upload-user'>
-                            <label htmlFor='email'>Stock :</label>
-                            <input type="number"
-                                placeholder="Stock" onChange={(e) => setStock(e.target.value)} />
-                        </div>
+            <div className='upload-user'>
+              <label htmlFor='email'>Price :</label>
+              <input type='number' placeholder='enter Price' onChange={(e) => setPrice(e.target.value)} />
+            </div>
 
-                        <div className='upload-user'>
-                            <label htmlFor='email'>Description :</label>
-                            <textarea type='text' placeholder='enter Description' onChange={(e) => setDescription(e.target.value)} />
-                        </div>
-                        <div id="createProductFormImage">
-                            {imagesPreview.map((image, index) => (
-                                <img key={index} src={image} alt="Product Preview" className="Product_Preview" />
-                            ))}
-                        </div>
-                        <div className='log-btn'>
-                            <button type="submit" className='log-botn'>
-                                Update product
-                            </button>
-                        </div>
-                    </form>
+            <div className='upload-user'>
+              <label htmlFor='email'>Stock :</label>
+              <input type="number"
+                placeholder="Stock" onChange={(e) => setStock(e.target.value)} />
+            </div>
 
-                </CModalBody>
-                <CModalFooter>
-                    <CButton color="secondary" onClick={() => setCardVisible(false)}>
-                        Close
-                    </CButton>
-                </CModalFooter>
-            </CModal>
+            <div className='upload-user'>
+              <label htmlFor='email'>Description :</label>
+              <textarea type='text' placeholder='enter Description' onChange={(e) => setDescription(e.target.value)} />
+            </div>
+            
+            <div className='log-btn'>
+              <button type="submit" className='log-botn'>
+                Update product
+              </button>
+            </div>
+          </form>
+
+        </CModalBody>
+        <CModalFooter>
+          <CButton color="secondary" onClick={() => setCardVisible(false)}>
+            Close
+          </CButton>
+        </CModalFooter>
+      </CModal>
       <div className='showallproduct'>
         <div className='show_cover'>
           <div className="product-head">{heading}</div>
@@ -130,28 +147,29 @@ const handleUpdateProducts = () => {
                       <br></br>
                       <span>Price: &#8377; {product.price}</span>
                     </div>
-                    
+
                     <div className='deleteUpdate'>
-                      <div className='update_btn'onClick={handleUpdateProducts}>
+                      <div className='update_btn' onClick={() => handleUpdateProducts(product._id)}>
                         <span class="material-symbols-outlined">
                           system_update
                         </span>
                       </div>
-                      <div className='delete_btn' onClick={handleDeleteProducts}>
+                      <div className='delete_btn'onClick={() => handleDeleteProducts(product._id)}> 
                         <span class="material-symbols-outlined">
                           delete
                         </span>
                       </div>
                     </div>
-                    </div>
-                  
+                  </div>
+
                 )}
               </div>
             ))}
           </div>
-
         </div>
       </div>
+      </div>
+      )}
     </div>
   );
 }
