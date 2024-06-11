@@ -4,7 +4,7 @@ import './login.css'
 import { CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle, CButton } from '@coreui/react';
 import '@coreui/coreui/dist/css/coreui.min.css';
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../Action/Useraction";
+import { Register } from "../../Action/Useraction";
 
 import { useState } from 'react'
 const Newregister = () => {
@@ -21,8 +21,9 @@ const Newregister = () => {
     const registerState = useSelector((state) => state.user);
 
     const handleSubmit = async (e) => {
+        console.log(phone.length)
         e.preventDefault();
-        dispatch(loginUser(fname, phone, email, inputPassword, cpassword, userType, navigate));
+        dispatch(Register(fname, phone, email, inputPassword, cpassword, userType, navigate));
         setVisible(true);
     }
 

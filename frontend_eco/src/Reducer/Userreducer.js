@@ -34,21 +34,36 @@ const initialState = {
     loading: false,
     messageColor: '',
     message: '',
-    userData: {},
+    userData: JSON.parse(localStorage.getItem('userData')) || {},
 
 };
 
 export const userReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOGIN_REQUEST:
-        case REGISTER_USER_REQUEST:
         case LOAD_USER_REQUEST:
             return {
                 ...state,
                 loading: true,
                 message: '',
             };
+        case REGISTER_USER_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                message: '',
+            };
         case LOGIN_SUCCESS:
+            const userData = action.payload;
+            localStorage.setItem('userData', JSON.stringify(userData));
+            return {
+                ...state,
+                isAuthenticated: true,
+                loading: false,
+                messageColor: 'green',
+                message: 'Login successful!',
+                userData: action.payload,
+            };
         case REGISTER_USER_SUCCESS:
             return {
                 ...state,
@@ -75,6 +90,7 @@ export const userReducer = (state = initialState, action) => {
                 message: action.payload,
             };
         case LOAD_USER_FAIL:
+
             return {
                 ...state,
                 loading: false,
@@ -127,7 +143,7 @@ export const allUserReducer = (state = { Alluserdata: [] }, action) => {
 export const profileReducer = (state = {}, action) => {
     switch (action.type) {
         case UPDATE_USER_REQUEST:
-            case DELETE_USER_REQUEST:
+        case DELETE_USER_REQUEST:
             return {
                 ...state,
                 loading: false
@@ -138,21 +154,21 @@ export const profileReducer = (state = {}, action) => {
                 loading: false,
                 isUpdate: action.payload
             };
-            case DELETE_USER_SUCCESS:
-                return {
-                  ...state,
-                  loading: false,
-                  isDeleted: action.payload.success,
-                  message: action.payload.message,
-                };
+        case DELETE_USER_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                isDeleted: action.payload.success,
+                message: action.payload.message,
+            };
         case UPDATE_USER_RESET:
-            case UPDATE_USER_RESET:
+        case UPDATE_USER_RESET:
             return {
                 ...state,
                 isUpdated: false,
             };
         case UPDATE_USER_FAIL:
-            case DELETE_USER_FAIL:
+        case DELETE_USER_FAIL:
             return {
                 ...state,
                 loading: false,

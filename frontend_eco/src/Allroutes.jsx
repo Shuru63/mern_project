@@ -9,6 +9,8 @@ import Home from './Page/Auth_page/Homepage/Home';
 import Product from './Page/Auth_page/Product/Product';
 import Userpage from './components/Userpage/Userpage';
 import Forgetpasswprd from './Page/Auth_page/Forgetpasswprd';
+import CategoryProductpage from './Page/Auth_page/Product/CategoryProductpage';
+import Footer from './components/Fotter/Footer';
 const Allroutes = () => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   return (
@@ -20,13 +22,13 @@ const Allroutes = () => {
         <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<Register />} />
-          <Route path="/product" element={<Product />} />
+          <Route path="/product/:id" element={<Product />} />
           <Route path="/userprofile" element={<Userpage />} />
           <Route path="/forgetpassword" element={<Forgetpasswprd />} />
-         
+          <Route path="/categoryproductpage/:category" element={<CategoryProductpage/>} />
         </Routes>
 
-     
+     <Footer/>
       </Router>
 
     </div>
