@@ -242,21 +242,28 @@ const updateUserRole = async (req, res, next) => {
             name: req.body.name,
             email: req.body.email,
             role: req.body.role,
-        }
-        console.log(updaterole)
+        };
+        console.log(updaterole);
         const roleUpdate = await UserData.findByIdAndUpdate(req.params.id, updaterole, {
             new: true,
             runValidators: true,
             useFindAndModify: false,
         });
 
+        if (!roleUpdate) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found",
+            });
+        }
+
         res.status(200).json({
             success: true,
-        })
+        });
     } catch (error) {
-        return next(new ErrorHandle("update user role function (admin) is not access ", 400))
+        return next(new ErrorHandle("Update user role function (admin) is not accessible", 400));
     }
-}
+};
 
 const deleteUser = async (req, res, next) => {
     try {

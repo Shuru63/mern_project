@@ -18,12 +18,28 @@ const createProduct = async (req, res, next) => {
 const getAllRouter = async (req, res, next) => {
        
     try {
-        const resultPerPage = 8;
+        // const resultPerPage = 8;
         const productcount = await Product.countDocuments();
         const apifeature = new Apifeatures(Product.find(), req.query)
             .search()
             .filter()
-            .pagination(resultPerPage);
+            // .pagination(resultPerPage);
+        const products = await apifeature.query;
+        res.status(200).json({
+            success: true,
+            products,
+            productcount
+        });
+    } catch (error) {
+        return next(new ErrorHandle("Unable to retrieve products", 500));
+    }
+
+};
+const getAllAdminRouter = async (req, res, next) => {
+       
+    try {
+        const productcount = await Product.countDocuments();
+        const apifeature = new Apifeatures(Product.find(), req.query)
         const products = await apifeature.query;
         res.status(200).json({
             success: true,
@@ -183,6 +199,6 @@ module.exports = {
     getProductDetails,
     userReview,
     getallreview,
-    deleteReview
-
+    deleteReview,
+    getAllAdminRouter
 };

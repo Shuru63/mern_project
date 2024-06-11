@@ -5,7 +5,7 @@ import { userDetails } from '../../Action/Useraction';
 import Alluser from '../mini-component/Alluser';
 import Uploadproduct from '../mini-component/Uploadproduct';
 import './userpage.css'
-
+import Loader from '../Fotter/Loader';
 const UserProfile = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -14,7 +14,7 @@ const UserProfile = () => {
     const { loading, userData, isAuthenticated } = userProfile;
     useEffect(() => {
         if (!isAuthenticated) {
-            navigate('/login');
+            navigate('/');
         } else {
             dispatch(userDetails());
         }
@@ -30,7 +30,7 @@ const UserProfile = () => {
     return (
         <>
             {loading ? (
-                <p>Loading...</p>
+                <Loader/>
             ) : (
                 userData && userData.userprofile && (
                     <div>

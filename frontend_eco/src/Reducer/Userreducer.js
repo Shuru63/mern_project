@@ -22,7 +22,11 @@ import {
     FORGOT_PASSWORD_FAIL,
     RESET_PASSWORD_REQUEST,
     RESET_PASSWORD_SUCCESS,
-    RESET_PASSWORD_FAIL
+    RESET_PASSWORD_FAIL,
+    DELETE_USER_REQUEST,
+    DELETE_USER_SUCCESS,
+    DELETE_USER_RESET,
+    DELETE_USER_FAIL,
 } from '../Constant/Usercontant';
 
 const initialState = {
@@ -123,6 +127,7 @@ export const allUserReducer = (state = { Alluserdata: [] }, action) => {
 export const profileReducer = (state = {}, action) => {
     switch (action.type) {
         case UPDATE_USER_REQUEST:
+            case DELETE_USER_REQUEST:
             return {
                 ...state,
                 loading: false
@@ -133,12 +138,21 @@ export const profileReducer = (state = {}, action) => {
                 loading: false,
                 isUpdate: action.payload
             };
+            case DELETE_USER_SUCCESS:
+                return {
+                  ...state,
+                  loading: false,
+                  isDeleted: action.payload.success,
+                  message: action.payload.message,
+                };
         case UPDATE_USER_RESET:
+            case UPDATE_USER_RESET:
             return {
                 ...state,
                 isUpdated: false,
             };
         case UPDATE_USER_FAIL:
+            case DELETE_USER_FAIL:
             return {
                 ...state,
                 loading: false,

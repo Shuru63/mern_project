@@ -6,12 +6,14 @@ const { getAllRouter,
     getProductDetails,
     userReview,
     getallreview,
-    deleteReview } = require("../controller/Productcontroller.js");
+    deleteReview,
+    getAllAdminRouter } = require("../controller/Productcontroller.js");
 
 const { Authentication,AuthorizeRole } = require("../middleware/Authentication")
 const router = express.Router();
 
 router.route("/products").get(getAllRouter);
+router.route("/products/admin").get(Authentication,AuthorizeRole("admin"),getAllAdminRouter);
 router.route("/admin/products/new").post(Authentication,AuthorizeRole("admin"), createProduct);
 router.route("/admin/products/:id").put(Authentication,AuthorizeRole("admin"), updateproduct);
 router.route("/admin/products/:id").delete(Authentication,AuthorizeRole("admin"), deleteProduct);
