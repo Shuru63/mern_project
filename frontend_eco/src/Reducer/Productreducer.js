@@ -17,6 +17,9 @@ import {
     DELETE_PRODUCT_SUCCESS,
     DELETE_PRODUCT_FAIL,
     DELETE_PRODUCT_RESET,
+    ALL_PRODUCT_DETAILS_REQUEST,
+    ALL_PRODUCT_DETAILS_SUCCESS,
+    ALL_PRODUCT_DETAILS_FAIL
 } from "../Constant/Productconstant";
 
 
@@ -118,3 +121,26 @@ export const UpdateDelProductReducer = (state = {}, action) => {
             return state;
     };
 };
+
+export const productDetailReducer = (state = { specificData: {} }, action) => {
+    switch (action.type) {
+        case ALL_PRODUCT_DETAILS_REQUEST:
+            return {
+                loading: true,
+                ...state,
+            }
+        case ALL_PRODUCT_DETAILS_SUCCESS:
+            return {
+                loading: false,
+                specificData: action.payload,
+            }
+
+            case ALL_PRODUCT_DETAILS_FAIL:
+                return{
+                    loading: false,
+                    error: action.payload,
+                }
+                default:
+                    return state
+    }
+}

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { allUserDetails, updateUserRole } from '../../Action/Useraction';
+import { allUserDetails, updateUserRole, deleteUser } from '../../Action/Useraction';
 import './alluser.css';
+import Loader from '../Fotter/Loader';
 import { CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle, CButton } from '@coreui/react';
 const Alluser = () => {
     const dispatch = useDispatch();
@@ -13,15 +14,16 @@ const Alluser = () => {
     const [fname, setFname] = useState('');
     const [email, setEmail] = useState('');
     const [userType, setUserType] = useState('')
-    const [userRoleId, setUserId] = useState('');
+    const [userRoleId, setUserRoleId] = useState('');
     const UserRole = useSelector((state) => state.profileUpdate)
-    
+    const [userid, setUserId] = useState();
+    const [userDeleteVisible,setUserDeleteVisible]=useState(false);
     useEffect(() => {
         dispatch(allUserDetails());
     }, [dispatch]);
 
     const getUserId = (userId, fname, email) => {
-        setUserId(userId);
+        setUserRoleId(userId);
         setFname(fname);
         setEmail(email);
         setRoleVisible(true)
@@ -33,8 +35,43 @@ const Alluser = () => {
         setVisible(true);
         setRoleVisible(false);
     }
+     const handleDeleteusers = (userId) => {
+        setUserId(userId);
+        setUserDeleteVisible(true);
+        console.log(userId)
+      };
+    const UserDelete = (e) => {
+        e.preventDefault();
+        dispatch(deleteUser(userid));
+        setUserDeleteVisible(false);
+        window.location.reload();
+    };
     return (
         <div>
+             <CModal
+        visible={userDeleteVisible}
+        onClose={() => setUserDeleteVisible(false)}
+        aria-labelledby="LiveDemoExampleLabel"
+        alignment='center'
+      >
+        <CModalHeader onClose={() => setUserDeleteVisible(false)}>
+          <CModalTitle id="LiveDemoExampleLabel">Alert</CModalTitle>
+        </CModalHeader>
+        <CModalBody>
+          <div className='delete_modal'>
+            <p>Are you sure Delete the user</p>
+          <div className='product_delete_btn' >
+             <button onClick={UserDelete}>delete user</button> 
+          </div>
+          </div>
+          
+        </CModalBody>
+        <CModalFooter>
+          <CButton color="secondary" onClick={() => setUserDeleteVisible(false)}>
+            Close
+          </CButton>
+        </CModalFooter>
+      </CModal>
             <CModal
                 visible={visible}
                 onClose={() => setVisible(false)}
@@ -97,7 +134,7 @@ const Alluser = () => {
                 <p> All user data</p>
                 <div className='user-list'>
                     {loading ? (
-                        <p>Loading...</p>
+                       <Loader/>
                     ) : (
                         <table className='user-table'>
                             <thead>
@@ -118,10 +155,16 @@ const Alluser = () => {
                                         <td>{user.email}</td>
                                         <td>{user.phone}</td>
                                         <td>{user.role}</td>
-                                        <td className='edit-user' onClick={() => getUserId(user._id, user.name, user.email)}>
-                                            <span class="material-symbols-outlined">
+                                        <td className='user_action' >
+                                            <span class="material-symbols-outlined edit-user" onClick={() => getUserId(user._id, user.name, user.email)}>
                                                 edit_square
                                             </span>
+                                            <span class="material-symbols-outlined delete_user" onClick={() => handleDeleteusers(user._id,)}>
+                                                delete
+                                            </span>
+                                        </td>
+                                        <td className='delete-user' >
+                                            
                                         </td>
                                     </tr>
                                 ))}

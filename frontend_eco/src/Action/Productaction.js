@@ -17,6 +17,9 @@ import {
   DELETE_PRODUCT_SUCCESS,
   DELETE_PRODUCT_FAIL,
   DELETE_PRODUCT_RESET,
+  ALL_PRODUCT_DETAILS_REQUEST,
+  ALL_PRODUCT_DETAILS_FAIL,
+  ALL_PRODUCT_DETAILS_SUCCESS
 } from "../Constant/Productconstant";
 
 export const addNewProduct = (name, description, price, image, categories, stocks) => async (dispatch) => {
@@ -84,13 +87,13 @@ export const updateProduct = (id, name, description, price, image, Stock) => asy
     };
 
     const { data } = await axios.put(
-      `/api/v1/admin/products/${id}`,{
-        name,
-        description,
-        price,
-        image,
-        Stock
-      },
+      `/api/v1/admin/products/${id}`, {
+      name,
+      description,
+      price,
+      image,
+      Stock
+    },
       config
     );
 
@@ -122,3 +125,19 @@ export const deleteProduct = (id) => async (dispatch) => {
     });
   }
 };
+
+export const specificProduct = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: ALL_PRODUCT_DETAILS_REQUEST });
+    const specificdata = await axios.get(`/api/v1/products/${id}`);
+    dispatch({
+      type: ALL_PRODUCT_DETAILS_SUCCESS,
+      payload: specificdata
+    })
+  } catch (error) {
+    dispatch({
+      type: ALL_PRODUCT_DETAILS_FAIL,
+      payload: error.response.data.message,
+    })
+  }
+}

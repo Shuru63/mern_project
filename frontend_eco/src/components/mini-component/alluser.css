@@ -27,6 +27,15 @@ td{
     padding: 0.5vmax  0.2vmax;
      border: 1px solid;
   }
-  .edit-user span{
+  .user_action{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .edit-user {
     color: aqua;
+  }
+  .delete_user{
+    color: rgb(255, 0, 0);
+    cursor: pointer;
   }
