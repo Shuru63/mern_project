@@ -9,7 +9,6 @@ const Categorylist = () => {
 
   const dispatch = useDispatch();
   const getProducts = useSelector(state => state.allProductsData);
-
   useEffect(() => {
     dispatch(getAllProduct());
   }, [dispatch]);

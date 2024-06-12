@@ -68,30 +68,70 @@ const Product = () => {
                 </b>
               </p>
               <p>
-  Rating:
-  <b>
-    {[...Array(5)].map((_, index) => (
-      <span key={index} className={index <product.Rating
-        ? 'star filled' : 'star'}>
-        &#9733;
-      </span>
-    ))}
-  </b>
-</p>
+                Rating:
+                <b>
+                  {[...Array(5)].map((_, index) => (
+                    <span key={index} className={index < product.Rating
+                      ? 'star filled' : 'star'}>
+                      &#9733;
+                    </span>
+                  ))}
+                </b>
+              </p>
+              <div class="offers">
+                <h4>Available Offers</h4>
+                <ul>
+                  <li><span class="material-symbols-outlined tag">
+                    sell
+                  </span>
+                    <span>
+                      <strong>Bank Offer:</strong> Get ₹50 instant discount on first Flipkart UPI transaction on order of ₹200 and above.
+                      <a href="#UPI-TnC" target="_blank">T&amp;C</a></span>
+                  </li>
+                  <li>
+                    <span class="material-symbols-outlined tag">
+                      sell
+                    </span>
+                    <span>
+                      <strong>Bank Offer:</strong> 5% Cashback on Flipkart Axis Bank Card.
+                      <a href="#AxisCashback-TnC" target="_blank">T&amp;C</a> </span>
+                  </li>
+                  <li>
+                    <span class="material-symbols-outlined tag">
+                      sell
+                    </span>
+                    <span> <strong>Bank Offer:</strong> ₹1000 Off On Axis Bank Credit and Debit Card Transactions.
+                      <a href="#AxisDiscount-TnC" target="_blank">T&amp;C</a></span>
+                  </li>
+                  <li>
+                    <span class="material-symbols-outlined tag">
+                      sell
+                    </span>
+                    <span>
+                      <strong>Special Price:</strong> Get extra ₹3500 off (price inclusive of cashback/coupon).
+                      <a href="#SpecialPrice-TnC" target="_blank">T&amp;C</a> </span>
+                  </li>
+                </ul>
+              </div>
               <div className='cart_button'>
                 <div className='add_to_cart_btn'>
-                  <button className=''>add to cart</button>
+                  <button className='add_cart_btn'><span class="material-symbols-outlined">
+                    shopping_cart_checkout
+                  </span><span>add to cart</span></button>
 
                 </div>
                 <div className='add_to_cart_btn add_to_buy_btn'>
-                  <button className=''
+                  <button className='add_cart_btn'
                     disabled={product.Stock < 1 ? true : false}
-                  >Buy Now</button>
+                  ><span class="material-symbols-outlined">
+                      flash_on
+                    </span><span>Buy Now</span></button>
 
                 </div>
               </div>
-              <div className=''>
-                <p>{product.description}</p>
+              <div className='product_description'>
+                <span><b>Description : </b></span>
+                <span>{product.description}</span>
               </div>
             </div>
           </div>
