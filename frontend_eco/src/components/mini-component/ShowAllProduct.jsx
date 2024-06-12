@@ -18,17 +18,18 @@ const ShowAllProduct = ({ Category, heading }) => {
   const dispatch = useDispatch();
   const getProducts = useSelector(state => state.allProductsData);
   const deleteUpdate = useSelector(state => state.updateDelete);
-  const{loading}= deleteUpdate
-  const {loadingwhole}=getProducts
+  const {loading}=getProducts
   const handleProductUpdate = async (e) => {
     e.preventDefault();
     dispatch(updateProduct(userid, { name, description, price, Stock }));
+    window.location.reload();
   };
 
   const handleProductDelete = (e) => {
     e.preventDefault();
     dispatch(deleteProduct(userid));
     setVisible(false);
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -54,9 +55,7 @@ const ShowAllProduct = ({ Category, heading }) => {
   };
   return (
     <div>
-      {loadingwhole ? (
-                <Loader/>
-            ) : (
+     
     <div>
       
       <CModal
@@ -130,6 +129,9 @@ const ShowAllProduct = ({ Category, heading }) => {
           </CButton>
         </CModalFooter>
       </CModal>
+       {loading ? (
+                <Loader/>
+            ) : (
       <div className='showallproduct'>
         <div className='show_cover'>
           <div className="product-head">{heading}</div>
@@ -167,9 +169,9 @@ const ShowAllProduct = ({ Category, heading }) => {
             ))}
           </div>
         </div>
+      </div>)}
       </div>
-      </div>
-      )}
+      
     </div>
   );
 }
