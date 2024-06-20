@@ -41,7 +41,9 @@ const Categorylist = () => {
                 <span className='product_icon-img'>
                   <img src={product.image[0].url} alt={product.name} />
                 </span>
+               
               </div>
+              <div className='category-name'>{product.categories}</div>
             </div></Link>
           ))}
         </div>

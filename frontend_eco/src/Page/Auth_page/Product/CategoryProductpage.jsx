@@ -4,15 +4,16 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './Product.css'
+import Loader from '../../../components/Fotter/Loader';
 import { getAllProduct } from '../../../Action/Productaction';
 const CategoryProductpage = () => {
     const { category } = useParams();
-    console.log(category)
-    const [allProductsData, setAllProductsData] = useState([]);
 
+    const [allProductsData, setAllProductsData] = useState([]);
+   
     const dispatch = useDispatch();
     const getProducts = useSelector(state => state.allProductsData);
-
+ const { loading, error, allUserData } =getProducts
     useEffect(() => {
         dispatch(getAllProduct());
     }, [dispatch]);
@@ -25,6 +26,9 @@ const CategoryProductpage = () => {
     console.log(getProducts)
     return (
         <div>
+             {loading ? (
+            <Loader/>
+         ) : (
             <div className='home_category_list'>
                 <div className='home_category_cover'>
                     <div className='home_category_list_heading'>
@@ -61,7 +65,7 @@ const CategoryProductpage = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>)}
         </div>
     )
 }
