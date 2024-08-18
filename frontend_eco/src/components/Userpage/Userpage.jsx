@@ -1,4 +1,4 @@
-import React, { useEffect ,useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { userDetails } from '../../Action/Useraction';
@@ -9,7 +9,7 @@ import Loader from '../Fotter/Loader';
 const UserProfile = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [displayUser,setDisplayUser]=useState(false)
+    const [displayUser, setDisplayUser] = useState(false)
     const userProfile = useSelector(state => state.user);
     const { loading, userData, isAuthenticated } = userProfile;
     useEffect(() => {
@@ -30,7 +30,7 @@ const UserProfile = () => {
     return (
         <>
             {loading ? (
-                <Loader/>
+                <Loader />
             ) : (
                 userData && userData.userprofile && (
                     <div>
@@ -77,9 +77,9 @@ const UserProfile = () => {
                             )}
 
                         </div>
-                        <div className={displayUser?'admin-permision':'admin-not-permit'}>
-                        {displayUser === 'users' && <Alluser />}
-                        {displayUser === 'products' && <Uploadproduct/>}
+                        <div className={displayUser ? 'admin-permision' : 'admin-not-permit'}>
+                            {displayUser === 'users' && <Alluser />}
+                            {displayUser === 'products' && <Uploadproduct />}
                         </div>
                     </div>
                 )
