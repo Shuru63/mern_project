@@ -4,6 +4,8 @@ import Banner from './HomeChild/Banner';
 import './home.css'
 import Categorylist from './HomeChild/Categorylist';
 import Categories from './HomeChild/Categories';
+import Loader from "../../../components/Fotter/Loader"
+
 const Home = () => {
   const categoriesData = [
     { Category: 'Airpodes', heading: 'Tops Airbuds' },
@@ -19,6 +21,8 @@ const Home = () => {
     { Category: 'TV', heading: 'Top TVs' },
     { Category: 'watches', heading: 'Top Watches' },
   ];
+  
+  
   return (
     <div>
       <div className='home_page'>

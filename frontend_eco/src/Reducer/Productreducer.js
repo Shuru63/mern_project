@@ -135,12 +135,12 @@ export const productDetailReducer = (state = { specificData: {} }, action) => {
                 specificData: action.payload,
             }
 
-            case ALL_PRODUCT_DETAILS_FAIL:
-                return{
-                    loading: false,
-                    error: action.payload,
-                }
-                default:
-                    return state
+        case ALL_PRODUCT_DETAILS_FAIL:
+            return {
+                loading: false,
+                error: action.payload,
+            }
+        default:
+            return state
     }
 }
