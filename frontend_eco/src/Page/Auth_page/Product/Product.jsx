@@ -31,7 +31,7 @@ const Product = () => {
       setSelectedImage(product.image[0].url);
     }
   }, [specificData, product]);
-
+console.log(loading)
   return (
     <div> {loading ? (
       <Loader />
